@@ -7,9 +7,12 @@
     "test": "jest"
   },
   "dependencies": {
+    "@ai-sdk/react": "^4.0.34",
     "@expo/vector-icons": "^15.0.2",
     "@react-navigation/native": "^7.1.28",
+    "@snapbox/pkg-automation-shizuku": "1.0.5",
     "@snapbox/pkg-ui": "1.0.8",
+    "ai": "^7.0.31",
     "expo": "^57.0.2",
     "expo-linking": "~57.0.1",
     "expo-router": "~57.0.3",
@@ -23,6 +26,7 @@
     "react-native-safe-area-context": "~5.7.0",
     "react-native-screens": "4.25.2",
     "react-native-worklets": "0.10.0",
+    "zod": "^4.4.3",
     "zustand": "^5.0.12"
   },
   "devDependencies": {
