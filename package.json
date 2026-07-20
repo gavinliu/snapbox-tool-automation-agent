@@ -7,6 +7,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@ai-sdk/openai-compatible": "^3.0.12",
     "@ai-sdk/react": "^4.0.34",
     "@expo/vector-icons": "^15.0.2",
     "@react-navigation/native": "^7.1.28",
@@ -14,8 +15,10 @@
     "@snapbox/pkg-ui": "1.0.8",
     "ai": "^7.0.31",
     "expo": "^57.0.2",
+    "expo-file-system": "~57.0.0",
     "expo-linking": "~57.0.1",
     "expo-router": "~57.0.3",
+    "expo-secure-store": "~57.0.1",
     "expo-status-bar": "~57.0.0",
     "expo-symbols": "~57.0.0",
     "expo-system-ui": "~57.0.0",
@@ -30,6 +33,7 @@
     "zustand": "^5.0.12"
   },
   "devDependencies": {
+    "@react-native/jest-preset": "^0.86.0",
     "@snapbox/cli": "1.0.14",
     "@snapbox/metro-config": "1.0.6",
     "@testing-library/react-native": "^13.3.3",
@@ -40,5 +44,6 @@
     "jest-expo": "~57.0.1",
     "react-test-renderer": "19.2.0",
     "typescript": "~6.0.3"
-  }
+  },
+  "packageManager": "yarn@4.13.0"
 }

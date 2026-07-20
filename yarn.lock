@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 10
+  version: 8
   cacheKey: 10c0
 
 "@adobe/css-tools@npm:^4.4.0":
@@ -35,6 +35,18 @@ __metadata:
   peerDependencies:
     zod: ^3.25.76 || ^4.1.8
   checksum: 10c0/008ece942d4dde5dbf0bf64b30a00a5132a9e4d0ea4807a631bd55608d4d0c2c5043150970a4c14940dec049d29737cd81b1b9a9c0cb838fcd5d288a65eec639
+  languageName: node
+  linkType: hard
+
+"@ai-sdk/openai-compatible@npm:^3.0.12":
+  version: 3.0.12
+  resolution: "@ai-sdk/openai-compatible@npm:3.0.12"
+  dependencies:
+    "@ai-sdk/provider": "npm:4.0.3"
+    "@ai-sdk/provider-utils": "npm:5.0.11"
+  peerDependencies:
+    zod: ^3.25.76 || ^4.1.8
+  checksum: 10c0/34c3996710bd3e4d446aa41fd9437f5c65ab6543979c1f7713e1634e4c63a2e7dc75316f6c7c190597c2ded2c59e92e6cc15239c2e5dfdef235c9a62a2c92b3f
   languageName: node
   linkType: hard
 
@@ -1717,7 +1729,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/create-cache-key-function@npm:^29.2.1":
+"@jest/create-cache-key-function@npm:^29.2.1, @jest/create-cache-key-function@npm:^29.7.0":
   version: 29.7.0
   resolution: "@jest/create-cache-key-function@npm:29.7.0"
   dependencies:
@@ -2587,6 +2599,21 @@ __metadata:
   version: 0.86.0
   resolution: "@react-native/gradle-plugin@npm:0.86.0"
   checksum: 10c0/02d8f7ae14c3163a6acf7098b1227a7ffd66cbfde96b6b151a02739bfbc27f123e023bd3411383e9a7a33f18e4d4d82100448615b8955a0ff95e8dee5d1ef4e8
+  languageName: node
+  linkType: hard
+
+"@react-native/jest-preset@npm:^0.86.0":
+  version: 0.86.0
+  resolution: "@react-native/jest-preset@npm:0.86.0"
+  dependencies:
+    "@jest/create-cache-key-function": "npm:^29.7.0"
+    "@react-native/js-polyfills": "npm:0.86.0"
+    babel-jest: "npm:^29.7.0"
+    jest-environment-node: "npm:^29.7.0"
+    regenerator-runtime: "npm:^0.13.2"
+  peerDependencies:
+    react: ^19.2.3
+  checksum: 10c0/34f6ffe9c6cedbb23eaeffa801a3dfea75034740dca2c7685aa1bbef42a5f12aa735c17e041142a4551176410b641c35656861c94827e73341a39d40b20b5fbb
   languageName: node
   linkType: hard
 
@@ -4854,7 +4881,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-file-system@npm:~57.0.1":
+"expo-file-system@npm:~57.0.0, expo-file-system@npm:~57.0.1":
   version: 57.0.1
   resolution: "expo-file-system@npm:57.0.1"
   peerDependencies:
@@ -5015,6 +5042,15 @@ __metadata:
     react-server-dom-webpack:
       optional: true
   checksum: 10c0/0588629aa1ee3e91a6d2d8148ca19e5d04e67daa87b1926bb2d90ba63344e7ee4180f2fe06bbf8d0704cccea716881ab5d5deacc480abd7cc2d627cd929a79b9
+  languageName: node
+  linkType: hard
+
+"expo-secure-store@npm:~57.0.1":
+  version: 57.0.1
+  resolution: "expo-secure-store@npm:57.0.1"
+  peerDependencies:
+    expo: "*"
+  checksum: 10c0/79439f0e4e38a4668da57a0262867a558f9e37bb657d627ce8e19cb3db9a3de003eacb95f738c6dba9a1ba644bd94aab31b6e906dd87d36a911dbd00a4ea128c
   languageName: node
   linkType: hard
 
@@ -8775,8 +8811,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "snapbox-tool-automation-agent@workspace:."
   dependencies:
+    "@ai-sdk/openai-compatible": "npm:^3.0.12"
     "@ai-sdk/react": "npm:^4.0.34"
     "@expo/vector-icons": "npm:^15.0.2"
+    "@react-native/jest-preset": "npm:^0.86.0"
     "@react-navigation/native": "npm:^7.1.28"
     "@snapbox/cli": "npm:1.0.14"
     "@snapbox/metro-config": "npm:1.0.6"
@@ -8788,8 +8826,10 @@ __metadata:
     "@types/react-test-renderer": "npm:^19"
     ai: "npm:^7.0.31"
     expo: "npm:^57.0.2"
+    expo-file-system: "npm:~57.0.0"
     expo-linking: "npm:~57.0.1"
     expo-router: "npm:~57.0.3"
+    expo-secure-store: "npm:~57.0.1"
     expo-status-bar: "npm:~57.0.0"
     expo-symbols: "npm:~57.0.0"
     expo-system-ui: "npm:~57.0.0"

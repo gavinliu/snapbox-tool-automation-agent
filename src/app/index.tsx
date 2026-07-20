@@ -1,5 +1,5 @@
-import { HomeScreen } from "../features/counter/screens/HomeScreen";
+import { AgentScreen } from "@/features/agent/screens/agent-screen";
 
 export default function Index() {
-  return <HomeScreen />;
+  return <AgentScreen />;
 }

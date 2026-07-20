@@ -1,6 +1,8 @@
 {
   "nav": {
-    "counter": "计数器"
+    "counter": "计数器",
+    "agent": "自动化 Agent",
+    "settings": "设置"
   },
   "counter": {
     "countIs": "当前计数"

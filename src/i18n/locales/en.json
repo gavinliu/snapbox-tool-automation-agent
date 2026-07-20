@@ -1,6 +1,8 @@
 {
   "nav": {
-    "counter": "Counter"
+    "counter": "Counter",
+    "agent": "Automation Agent",
+    "settings": "Settings"
   },
   "counter": {
     "countIs": "Count is"

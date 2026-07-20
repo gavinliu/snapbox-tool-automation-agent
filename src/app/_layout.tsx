@@ -1,3 +1,4 @@
+import { useSettingsStore } from "@/features/settings/store/use-settings-store";
 import {
   CustomNavigationBar,
   NativeUI,
@@ -5,7 +6,7 @@ import {
   useThemeStore,
   useTranslation,
 } from "@snapbox/pkg-ui";
-import { Stack, useRouter } from "expo-router";
+import { Stack } from "expo-router";
 import { ThemeProvider } from "expo-router/react-navigation";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
@@ -19,10 +20,10 @@ const { CombinedDarkTheme, CombinedDefaultTheme } = createSnapboxTheme(
 );
 
 export default function Layout() {
-  const router = useRouter();
   const colorScheme = useColorScheme();
   const themeMode = useThemeStore((state) => state.theme);
   const { t } = useTranslation();
+  const hydrateSettings = useSettingsStore((state) => state.hydrate);
 
   const isDark =
     themeMode === "dark" || (themeMode === "system" && colorScheme === "dark");
@@ -33,6 +34,10 @@ export default function Layout() {
     NativeUI.setBackgroundColor(paperTheme.colors.background);
     NativeUI.setPillStyle(isDark ? "dark" : "light");
   }, [paperTheme.colors.background, isDark]);
+
+  useEffect(() => {
+    void hydrateSettings();
+  }, [hydrateSettings]);
 
   return (
     <PaperProvider theme={paperTheme}>
@@ -47,8 +52,13 @@ export default function Layout() {
           <Stack.Screen
             name="index"
             options={{
-              title: t("nav.counter", "Counter"),
+              title: t("nav.agent", "自动化 Agent"),
+              headerRight: () => null,
             }}
+          />
+          <Stack.Screen
+            name="settings"
+            options={{ title: t("nav.settings", "设置") }}
           />
         </Stack>
       </ThemeProvider>
