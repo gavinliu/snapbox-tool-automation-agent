@@ -9,5 +9,6 @@ Automation Agent for Android on Snapbox
 ## 技术栈
 
 - Snapbox
-- Shizuku API by Snapbox
-- AI SDK by Vercel
+- `@snapbox/pkg-automation-shizuku` by Snapbox
+- `@ai-sdk/*` by Vercel
+- `react-native-paper` by callstack
