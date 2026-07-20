@@ -1,0 +1,8 @@
+{
+  "nav": {
+    "counter": "Counter"
+  },
+  "counter": {
+    "countIs": "Count is"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "nav": {
+    "counter": "计数器"
+  },
+  "counter": {
+    "countIs": "当前计数"
+  }
+}

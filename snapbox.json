@@ -1,0 +1,8 @@
+{
+  "tool": {
+    "name": "Automation",
+    "description": "Automation Agent for Android on Snapbox",
+    "primaryColor": "#4CAF50",
+    "icon": "MaterialDesignIcons:package-variant-closed"
+  }
+}

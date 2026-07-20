@@ -1,0 +1,40 @@
+{
+  "name": "snapbox-tool-automation-agent",
+  "version": "1.0.0",
+  "main": "expo-router/entry",
+  "scripts": {
+    "start": "expo start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@expo/vector-icons": "^15.0.2",
+    "@react-navigation/native": "^7.1.28",
+    "@snapbox/pkg-ui": "1.0.8",
+    "expo": "^57.0.2",
+    "expo-linking": "~57.0.1",
+    "expo-router": "~57.0.3",
+    "expo-status-bar": "~57.0.0",
+    "expo-symbols": "~57.0.0",
+    "expo-system-ui": "~57.0.0",
+    "react": "19.2.3",
+    "react-native": "0.86.0",
+    "react-native-paper": "^5.15.0",
+    "react-native-reanimated": "4.5.0",
+    "react-native-safe-area-context": "~5.7.0",
+    "react-native-screens": "4.25.2",
+    "react-native-worklets": "0.10.0",
+    "zustand": "^5.0.12"
+  },
+  "devDependencies": {
+    "@snapbox/cli": "1.0.14",
+    "@snapbox/metro-config": "1.0.6",
+    "@testing-library/react-native": "^13.3.3",
+    "@types/jest": "^29.5.12",
+    "@types/react": "~19.2.2",
+    "@types/react-test-renderer": "^19",
+    "jest": "^29.7.0",
+    "jest-expo": "~57.0.1",
+    "react-test-renderer": "19.2.0",
+    "typescript": "~6.0.3"
+  }
+}
