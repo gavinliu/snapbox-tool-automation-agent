@@ -30,6 +30,9 @@ type PendingScreenshot = {
   mediaType: string;
 };
 
+const SCREENSHOT_CONTEXT_TEXT =
+  "这是 screenshot 工具刚刚截取的当前手机屏幕。请分析图片后继续完成任务。";
+
 const pointSchema = {
   x: z.number().nonnegative().describe("屏幕横坐标，单位 px"),
   y: z.number().nonnegative().describe("屏幕纵坐标，单位 px"),
@@ -77,16 +80,27 @@ export function createAutomationAgent({
 
       const screenshot = pendingScreenshot;
       pendingScreenshot = null;
+      const messagesWithoutPreviousScreenshots = messages.filter(
+        (message) =>
+          !(
+            message.role === "user" &&
+            Array.isArray(message.content) &&
+            message.content.some(
+              (part) =>
+                part.type === "text" && part.text === SCREENSHOT_CONTEXT_TEXT,
+            )
+          ),
+      );
 
       return {
         messages: [
-          ...messages,
+          ...messagesWithoutPreviousScreenshots,
           {
             role: "user",
             content: [
               {
                 type: "text",
-                text: "这是 screenshot 工具刚刚截取的当前手机屏幕。请分析图片后继续完成任务。",
+                text: SCREENSHOT_CONTEXT_TEXT,
               },
               {
                 type: "file",
