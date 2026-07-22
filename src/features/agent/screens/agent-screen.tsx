@@ -225,6 +225,11 @@ export function AgentScreen() {
           },
         ]}
       >
+        {running ? (
+          <Text variant="labelMedium" style={styles.runningStatus}>
+            Agent 正在操作手机，请勿手动切换页面…
+          </Text>
+        ) : null}
         <View
           style={[
             styles.inputShell,
@@ -283,7 +288,6 @@ export function AgentScreen() {
             />
           )}
         </View>
-        {running ? <Text variant="labelMedium">Agent 正在操作手机，请勿手动切换页面…</Text> : null}
       </View>
     </Animated.View>
   );
@@ -302,6 +306,7 @@ const styles = StyleSheet.create({
   message: { maxWidth: "88%" },
   toolEvent: { flexDirection: "row", alignItems: "center", alignSelf: "center" },
   composer: { paddingHorizontal: 12, paddingTop: 8, gap: 6 },
+  runningStatus: { alignSelf: "center", textAlign: "center" },
   inputShell: {
     minHeight: 52,
     flexDirection: "row",
