@@ -13,7 +13,7 @@ export default function DrawerLayout() {
         headerLeft: () => <DrawerToggleButton />,
         headerTransparent: true,
         drawerType: "front",
-        swipeEdgeWidth: 48,
+        swipeEdgeWidth: 56,
       }}
     >
       <Drawer.Screen

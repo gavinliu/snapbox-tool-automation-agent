@@ -1,12 +1,12 @@
 import { useTranslation } from "@snapbox/pkg-ui";
 import { useRouter } from "expo-router";
-import { getDefaultHeaderHeight } from "expo-router/react-navigation";
 import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
   DrawerItem,
   DrawerItemList,
 } from "expo-router/drawer";
+import { getDefaultHeaderHeight } from "expo-router/react-navigation";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 import { Icon, Text, useTheme } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -17,7 +17,8 @@ export function AppDrawerContent(props: DrawerContentComponentProps) {
   const insets = useSafeAreaInsets();
   const layout = useWindowDimensions();
   const { t } = useTranslation();
-  const toolbarHeight = getDefaultHeaderHeight(layout, false, insets.top) - insets.top;
+  const toolbarHeight =
+    getDefaultHeaderHeight(layout, false, insets.top) - insets.top;
 
   const openSettings = () => {
     props.navigation.closeDrawer();
@@ -41,7 +42,7 @@ export function AppDrawerContent(props: DrawerContentComponentProps) {
           styles.footer,
           {
             borderTopColor: theme.colors.outlineVariant,
-            paddingBottom: Math.max(insets.bottom, 12),
+            paddingBottom: Math.max(insets.bottom, 16),
           },
         ]}
       >
