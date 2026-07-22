@@ -1,5 +1,6 @@
 import { useAutomationShizukuPermissions } from "@snapbox/pkg-automation-shizuku";
 import { Link } from "expo-router";
+import { useHeaderHeight } from "expo-router/react-navigation";
 import { useMemo, useRef, useState } from "react";
 import { KeyboardAvoidingView, ScrollView, StyleSheet, View } from "react-native";
 import { Button, Card, Chip, IconButton, Text, TextInput, useTheme } from "react-native-paper";
@@ -27,6 +28,7 @@ const TOOL_LABELS: Record<string, string> = {
 
 export function AgentScreen() {
   const theme = useTheme();
+  const headerHeight = useHeaderHeight();
   const apiKey = useSettingsStore((state) => state.apiKey);
   const model = useSettingsStore((state) => state.model);
   const [permission, requestPermission] = useAutomationShizukuPermissions();
@@ -98,7 +100,7 @@ export function AgentScreen() {
       <ScrollView
         ref={scrollRef}
         contentInsetAdjustmentBehavior="automatic"
-        contentContainerStyle={styles.content}
+        contentContainerStyle={[styles.content, { paddingTop: headerHeight + 16 }]}
         keyboardShouldPersistTaps="handled"
         onContentSizeChange={() => scrollRef.current?.scrollToEnd({ animated: true })}
       >
@@ -122,9 +124,6 @@ export function AgentScreen() {
             <Text variant="labelMedium" style={{ color: theme.colors.onSurfaceVariant }}>
               {model}
             </Text>
-            <Link href="/settings" asChild>
-              <IconButton icon="cog-outline" accessibilityLabel="设置" />
-            </Link>
           </View>
         </View>
 

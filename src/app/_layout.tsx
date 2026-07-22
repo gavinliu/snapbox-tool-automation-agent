@@ -50,10 +50,9 @@ export default function Layout() {
           }}
         >
           <Stack.Screen
-            name="index"
+            name="(drawer)"
             options={{
-              title: t("nav.agent", "自动化 Agent"),
-              headerRight: () => null,
+              headerShown: false,
             }}
           />
           <Stack.Screen
