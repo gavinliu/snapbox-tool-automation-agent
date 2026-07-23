@@ -25,13 +25,20 @@ export function AgentStatusOverlay() {
         onPress: () => {
           hide();
           dismiss();
-          void Linking.openURL(Linking.createURL("/"));
+          void Linking.openURL(
+            Linking.createURL("/tools?toolId=snapbox-tool-automation-agent"),
+          );
         },
       },
     ]);
-
-    return hide;
   }, [currentAction, dismiss, overlayPermissionGranted, phase]);
+
+  useEffect(
+    () => () => {
+      hide();
+    },
+    [],
+  );
 
   return null;
 }
