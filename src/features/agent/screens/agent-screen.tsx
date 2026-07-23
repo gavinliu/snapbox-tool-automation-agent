@@ -10,6 +10,7 @@ import {
   TextInput as NativeTextInput,
   View,
 } from "react-native";
+import Markdown from "react-native-markdown-display";
 import { ActivityIndicator, Button, Card, Chip, IconButton, Text, useTheme } from "react-native-paper";
 import Animated, { useAnimatedKeyboard, useAnimatedStyle } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -67,6 +68,51 @@ export function AgentScreen() {
   const running = phase === "running";
   const canSend = input.trim().length > 0 && !running && apiKey.length > 0;
   const isMultiline = input.includes("\n") || inputHeight > SINGLE_LINE_HEIGHT + 4;
+  const markdownStyles = useMemo(
+    () => ({
+      body: {
+        color: theme.colors.onSurfaceVariant,
+        fontSize: 14,
+        lineHeight: 20,
+      },
+      heading1: { color: theme.colors.onSurface, fontSize: 24, lineHeight: 30 },
+      heading2: { color: theme.colors.onSurface, fontSize: 20, lineHeight: 26 },
+      heading3: { color: theme.colors.onSurface, fontSize: 17, lineHeight: 23 },
+      paragraph: { marginTop: 0, marginBottom: 8 },
+      link: { color: theme.colors.primary },
+      blockquote: {
+        backgroundColor: theme.colors.surface,
+        borderLeftColor: theme.colors.outline,
+        borderLeftWidth: 3,
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+      },
+      code_inline: {
+        backgroundColor: theme.colors.surface,
+        color: theme.colors.onSurface,
+        borderRadius: 4,
+        paddingHorizontal: 4,
+      },
+      fence: {
+        backgroundColor: theme.colors.surface,
+        borderColor: theme.colors.outlineVariant,
+        color: theme.colors.onSurface,
+        borderRadius: 8,
+        borderWidth: 1,
+        padding: 10,
+      },
+      table: {
+        borderColor: theme.colors.outlineVariant,
+        borderWidth: 1,
+      },
+      tr: { borderBottomColor: theme.colors.outlineVariant },
+      th: { backgroundColor: theme.colors.surface },
+      td: { borderColor: theme.colors.outlineVariant },
+      bullet_list: { marginBottom: 8 },
+      ordered_list: { marginBottom: 8 },
+    }),
+    [theme],
+  );
   const recentContext = useMemo(
     () => messages.filter((message) => message.role !== "tool").slice(-6),
     [messages],
@@ -225,7 +271,11 @@ export function AgentScreen() {
                   ]}
                 >
                   <Card.Content>
-                    <Text selectable>{message.text}</Text>
+                    {message.role === "assistant" ? (
+                      <Markdown style={markdownStyles}>{message.text}</Markdown>
+                    ) : (
+                      <Text selectable>{message.text}</Text>
+                    )}
                   </Card.Content>
                 </Card>
               ),
