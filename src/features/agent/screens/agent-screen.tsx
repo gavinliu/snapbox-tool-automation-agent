@@ -183,16 +183,11 @@ export function AgentScreen() {
           </Card>
         ) : null}
 
-        <View style={styles.statusRow}>
-          <Chip icon={permissionGranted ? "check-circle" : "cellphone-key"}>
-            {permissionGranted ? "Shizuku 已授权" : "需要 Shizuku 授权"}
-          </Chip>
-          <View style={styles.modelRow}>
-            <Text variant="labelMedium" style={{ color: theme.colors.onSurfaceVariant }}>
-              {model}
-            </Text>
+        {!permissionGranted ? (
+          <View style={styles.statusRow}>
+            <Chip icon="cellphone-key">需要 Shizuku 授权</Chip>
           </View>
-        </View>
+        ) : null}
 
         {messages.length === 0 ? (
           <View style={styles.empty}>
@@ -322,8 +317,7 @@ const styles = StyleSheet.create({
   messageViewport: { flex: 1, overflow: "hidden" },
   content: { flexGrow: 1, padding: 16, gap: 16 },
   cardContent: { gap: 12 },
-  statusRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 12 },
-  modelRow: { flexDirection: "row", alignItems: "center", flexShrink: 1 },
+  statusRow: { flexDirection: "row", alignItems: "center" },
   empty: { flex: 1, justifyContent: "center", gap: 12, paddingVertical: 48 },
   examples: { alignItems: "flex-start", gap: 10, paddingTop: 12 },
   messages: { gap: 10 },
