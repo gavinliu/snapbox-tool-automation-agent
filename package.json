@@ -12,6 +12,7 @@
     "@expo/vector-icons": "^15.0.2",
     "@react-navigation/native": "^7.1.28",
     "@snapbox/pkg-automation-shizuku": "1.0.5",
+    "@snapbox/pkg-floating-menu": "^1.0.8",
     "@snapbox/pkg-ui": "1.0.8",
     "ai": "^7.0.31",
     "expo": "^57.0.2",

@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "Automation",
+    "scheme": "automation",
     "plugins": [
       "expo-router",
       "expo-secure-store"

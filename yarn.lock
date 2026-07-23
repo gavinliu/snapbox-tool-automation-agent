@@ -2812,6 +2812,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@snapbox/pkg-floating-menu@npm:^1.0.8":
+  version: 1.0.8
+  resolution: "@snapbox/pkg-floating-menu@npm:1.0.8"
+  peerDependencies:
+    expo: "*"
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/feb8d37904d624be934b58f498af9d4b084017e11e9ddbe0d1176825ccf2773cf79765b4f0f207ed2c5dab557d3f4db61f585a793f78146215f77122f76d1131
+  languageName: node
+  linkType: hard
+
 "@snapbox/pkg-tools-engine@npm:1.0.7":
   version: 1.0.7
   resolution: "@snapbox/pkg-tools-engine@npm:1.0.7"
@@ -8850,6 +8861,7 @@ __metadata:
     "@snapbox/cli": "npm:1.0.14"
     "@snapbox/metro-config": "npm:1.0.6"
     "@snapbox/pkg-automation-shizuku": "npm:1.0.5"
+    "@snapbox/pkg-floating-menu": "npm:^1.0.8"
     "@snapbox/pkg-ui": "npm:1.0.8"
     "@testing-library/react-native": "npm:^13.3.3"
     "@types/jest": "npm:^29.5.12"

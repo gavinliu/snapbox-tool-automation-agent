@@ -1,4 +1,5 @@
 import { useAutomationShizukuPermissions } from "@snapbox/pkg-automation-shizuku";
+import { useOverlayPermissions } from "@snapbox/pkg-floating-menu";
 import { Link } from "expo-router";
 import { useHeaderHeight } from "expo-router/react-navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -13,6 +14,7 @@ import { ActivityIndicator, Button, Card, Chip, IconButton, Text, useTheme } fro
 import Animated, { useAnimatedKeyboard, useAnimatedStyle } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { createAutomationAgent } from "@/features/agent/lib/automation-agent";
+import { useAgentRunStore } from "@/features/agent/store/use-agent-run-store";
 import { useSettingsStore } from "@/features/settings/store/use-settings-store";
 
 type Message = {
@@ -45,15 +47,24 @@ export function AgentScreen() {
   const apiKey = useSettingsStore((state) => state.apiKey);
   const model = useSettingsStore((state) => state.model);
   const [permission, requestPermission] = useAutomationShizukuPermissions();
+  const [overlayPermission, requestOverlayPermission] = useOverlayPermissions();
   const [input, setInput] = useState("");
   const [inputHeight, setInputHeight] = useState(SINGLE_LINE_HEIGHT);
   const [inputFocused, setInputFocused] = useState(false);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
-  const [running, setRunning] = useState(false);
+  const phase = useAgentRunStore((state) => state.phase);
+  const startRun = useAgentRunStore((state) => state.start);
+  const reportAction = useAgentRunStore((state) => state.reportAction);
+  const succeedRun = useAgentRunStore((state) => state.succeed);
+  const failRun = useAgentRunStore((state) => state.fail);
+  const setOverlayPermissionGranted = useAgentRunStore(
+    (state) => state.setOverlayPermissionGranted,
+  );
   const [messages, setMessages] = useState<Message[]>([]);
   const scrollRef = useRef<ScrollView>(null);
 
   const permissionGranted = permission?.granted === true;
+  const running = phase === "running";
   const canSend = input.trim().length > 0 && !running && apiKey.length > 0;
   const isMultiline = input.includes("\n") || inputHeight > SINGLE_LINE_HEIGHT + 4;
   const recentContext = useMemo(
@@ -70,6 +81,10 @@ export function AgentScreen() {
       { ...message, id: `${Date.now()}-${Math.random()}` },
     ]);
   };
+
+  useEffect(() => {
+    setOverlayPermissionGranted(overlayPermission?.granted === true);
+  }, [overlayPermission?.granted, setOverlayPermissionGranted]);
 
   useEffect(() => {
     const showEvent = process.env.EXPO_OS === "ios" ? "keyboardWillShow" : "keyboardDidShow";
@@ -106,9 +121,14 @@ export function AgentScreen() {
       }
     }
 
+    if (overlayPermission?.granted !== true) {
+      const result = await requestOverlayPermission();
+      setOverlayPermissionGranted(result.granted);
+    }
+
     setInput("");
     setInputHeight(SINGLE_LINE_HEIGHT);
-    setRunning(true);
+    startRun();
     append({ role: "user", text: goal });
 
     try {
@@ -116,7 +136,9 @@ export function AgentScreen() {
         apiKey,
         model,
         onToolCall: ({ name }) => {
-          append({ role: "tool", text: TOOL_LABELS[name] ?? name });
+          const action = TOOL_LABELS[name] ?? name;
+          reportAction(action);
+          append({ role: "tool", text: action });
         },
       });
       const context = recentContext
@@ -126,13 +148,15 @@ export function AgentScreen() {
         prompt: context ? `最近对话：\n${context}\n\n当前任务：${goal}` : goal,
       });
       append({ role: "assistant", text: result.text || "任务执行结束。" });
+      succeedRun();
     } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "执行失败，请稍后重试。";
       append({
         role: "assistant",
-        text: error instanceof Error ? `执行失败：${error.message}` : "执行失败，请稍后重试。",
+        text: `执行失败：${errorMessage}`,
       });
-    } finally {
-      setRunning(false);
+      failRun(errorMessage);
     }
   };
 

@@ -39,8 +39,16 @@ const SCREENSHOT_CONTEXT_TEXT =
   "这是 screenshot 工具刚刚截取的当前手机屏幕。请分析图片后继续完成任务。";
 
 const pointSchema = {
-  x: z.number().min(0).max(1000).describe("归一化横坐标，最左为 0，最右为 1000"),
-  y: z.number().min(0).max(1000).describe("归一化纵坐标，最上为 0，最下为 1000"),
+  x: z
+    .number()
+    .min(0)
+    .max(1000)
+    .describe("归一化横坐标，最左为 0，最右为 1000"),
+  y: z
+    .number()
+    .min(0)
+    .max(1000)
+    .describe("归一化纵坐标，最上为 0，最下为 1000"),
 };
 
 async function readScreenshot(uri: string): Promise<PendingScreenshot> {
@@ -50,7 +58,9 @@ async function readScreenshot(uri: string): Promise<PendingScreenshot> {
   const extension = fileUri.split("?")[0].split(".").pop()?.toLowerCase();
   const mediaType =
     file.type ||
-    ({ jpg: "image/jpeg", jpeg: "image/jpeg", webp: "image/webp" }[extension ?? ""] ??
+    ({ jpg: "image/jpeg", jpeg: "image/jpeg", webp: "image/webp" }[
+      extension ?? ""
+    ] ??
       "image/png");
 
   return { data: await file.base64(), height, mediaType, width };
@@ -136,16 +146,12 @@ export function createAutomationAgent({
         ],
       };
     },
-    onStepFinish: ({ toolCalls }) => {
-      for (const call of toolCalls) {
-        onToolCall?.({ name: call.toolName, input: call.input });
-      }
-    },
     tools: {
       screenshot: tool({
         description: "截取当前手机屏幕。用它观察 UI、定位控件并验证操作结果。",
         inputSchema: z.object({}),
         execute: async () => {
+          onToolCall?.({ name: "screenshot", input: {} });
           const uri = await captureScreen();
           if (!uri) throw new Error("截图失败，请确认 Shizuku 已运行并授权");
 
@@ -164,19 +170,24 @@ export function createAutomationAgent({
       currentApp: tool({
         description: "获取当前前台 App 的 Android package name。",
         inputSchema: z.object({}),
-        execute: async () => ({ packageName: await getCurrentApp() }),
+        execute: async () => {
+          onToolCall?.({ name: "currentApp", input: {} });
+          return { packageName: await getCurrentApp() };
+        },
       }),
       launchApp: tool({
         description: "通过 Android package name 启动 App。",
         inputSchema: z.object({ packageName: z.string().min(1) }),
-        execute: async ({ packageName }) => ({
-          success: await launchApp(packageName),
-        }),
+        execute: async ({ packageName }) => {
+          onToolCall?.({ name: "launchApp", input: { packageName } });
+          return { success: await launchApp(packageName) };
+        },
       }),
       tap: tool({
         description: "点击屏幕上的一个坐标。",
         inputSchema: z.object(pointSchema),
         execute: async (point) => {
+          onToolCall?.({ name: "tap", input: point });
           const { x, y } = toPhysicalPoint(point, requireScreenSize());
           return { success: await tap(x, y) };
         },
@@ -185,6 +196,7 @@ export function createAutomationAgent({
         description: "双击屏幕上的一个坐标。",
         inputSchema: z.object(pointSchema),
         execute: async (point) => {
+          onToolCall?.({ name: "doubleTap", input: point });
           const { x, y } = toPhysicalPoint(point, requireScreenSize());
           return { success: await doubleTap(x, y) };
         },
@@ -196,6 +208,7 @@ export function createAutomationAgent({
           duration: z.number().int().min(100).max(10000).default(800),
         }),
         execute: async ({ x, y, duration }) => {
+          onToolCall?.({ name: "longPress", input: { x, y, duration } });
           const physicalPoint = toPhysicalPoint({ x, y }, requireScreenSize());
           return {
             success: await longPress(
@@ -216,6 +229,10 @@ export function createAutomationAgent({
           duration: z.number().int().min(100).max(10000).default(500),
         }),
         execute: async ({ x1, y1, x2, y2, duration }) => {
+          onToolCall?.({
+            name: "swipe",
+            input: { x1, y1, x2, y2, duration },
+          });
           const screenSize = requireScreenSize();
           const from = toPhysicalPoint({ x: x1, y: y1 }, screenSize);
           const to = toPhysicalPoint({ x: x2, y: y2 }, screenSize);
@@ -227,17 +244,26 @@ export function createAutomationAgent({
       typeText: tool({
         description: "向当前获得焦点的输入框输入文本。",
         inputSchema: z.object({ text: z.string() }),
-        execute: async ({ text }) => ({ success: await typeText(text) }),
+        execute: async ({ text }) => {
+          onToolCall?.({ name: "typeText", input: { text } });
+          return { success: await typeText(text) };
+        },
       }),
       back: tool({
         description: "触发 Android 返回操作。",
         inputSchema: z.object({}),
-        execute: async () => ({ success: await back() }),
+        execute: async () => {
+          onToolCall?.({ name: "back", input: {} });
+          return { success: await back() };
+        },
       }),
       home: tool({
         description: "返回 Android 主屏幕。",
         inputSchema: z.object({}),
-        execute: async () => ({ success: await home() }),
+        execute: async () => {
+          onToolCall?.({ name: "home", input: {} });
+          return { success: await home() };
+        },
       }),
     },
   });

@@ -1,4 +1,5 @@
 import { useSettingsStore } from "@/features/settings/store/use-settings-store";
+import { AgentStatusOverlay } from "@/features/agent/components/agent-status-overlay";
 import {
   CustomNavigationBar,
   NativeUI,
@@ -42,6 +43,7 @@ export default function Layout() {
   return (
     <PaperProvider theme={paperTheme}>
       <ThemeProvider value={paperTheme}>
+        <AgentStatusOverlay />
         <StatusBar style={isDark ? "light" : "dark"} />
         <Stack
           screenOptions={{
